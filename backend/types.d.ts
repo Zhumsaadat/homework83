@@ -1,3 +1,6 @@
+import User from './models/User';
+import { Model } from 'mongoose';
+
 export interface Artist {
   name: string;
   image: string | null;
@@ -28,3 +31,9 @@ export interface TrackHistoryMutation {
   track: string;
   datetime: Date;
 }
+
+interface UserMethods {
+  checkPassword(password: string): Promise<boolean>;
+}
+
+export type UserModel = Model<User, {}, UserMethods>;
