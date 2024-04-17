@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import config from './config';
 import albumsRouter from './routes/albums';
 import tracksRouter from './routes/trackts';
+import user from './routes/user';
 
 const app = express();
 const port = 8000;
@@ -15,6 +16,7 @@ app.use(cors());
 app.use('/artists', artistsRouter);
 app.use('/albums', albumsRouter);
 app.use('/tracks', tracksRouter);
+app.use('/users', user);
 
 
 const run = async () => {

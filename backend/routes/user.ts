@@ -1,11 +1,42 @@
 import express from 'express';
+import User from '../models/User';
+import mongoose from 'mongoose';
 
-const userRouter = express.Router();
+const usersRouter = express.Router();
 
-userRouter.post('/', (req, res, next) => {
+usersRouter.post('/', async (req, res, next) => {
   try {
+    const user = new User({
+      username:req.body.username,
+      password: req.body.password,
+      //token:
+    });
 
+    await  user.save();
+
+    return res.send(user);
   }catch (e) {
+    if(e instanceof mongoose.Error.ValidationError){
+      return res.status(422).send(e);
+    }
     next(e);
   }
+});
+
+usersRouter.post('/sessions', async (req, res) => {
+  const user = await User.findOne({username: req.body.username});
+
+  if(!user) {
+    return res.status(400).send({error: "Username or Password not correct!"});
+  }
+  const isMatch = await user.checkPassword(req.body.password);
+
+  if(!isMatch) {
+    return res.status(400).send({error: "Username or Password not correct!"});
+  }
+
+  return res.send({message: "Username and Password correct!"});
+
 })
+
+export default usersRouter;
