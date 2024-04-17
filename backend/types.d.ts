@@ -34,6 +34,7 @@ export interface TrackHistoryMutation {
 
 interface UserMethods {
   checkPassword(password: string): Promise<boolean>;
+  generateToken(): void;
 }
 
 export type UserModel = Model<User, {}, UserMethods>;
