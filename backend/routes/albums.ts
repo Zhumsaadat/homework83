@@ -8,10 +8,10 @@ const albumsRouter = express.Router();
 albumsRouter.get('/', async (req, res, next) => {
   try {
     let albums;
-    if(req.query.artist) {
-      albums = await Albums.find({ artist: req.query.artist }).populate("singer", "_id name");
+    if (req.query.artist) {
+      albums = await Albums.find({artist: req.query.artist}).populate('singer', '_id name');
     } else {
-      albums = await Albums.find().populate("singer", "_id name");
+      albums = await Albums.find().populate('singer', '_id name');
     }
 
     res.send(albums);
@@ -30,7 +30,7 @@ albumsRouter.get('/:id', async (req, res, next) => {
       return res.status(404).send({error: 'Wrong ObjectId'});
     }
 
-    const album = await Albums.findOne({_id}).populate("singer", "_id name");
+    const album = await Albums.findOne({_id}).populate('singer', '_id name');
 
     if (!album) {
       return res.status(404).send({error: 'Not found!'});
@@ -43,14 +43,13 @@ albumsRouter.get('/:id', async (req, res, next) => {
 });
 
 
-
-albumsRouter.post("/", async (req, res, next) => {
+albumsRouter.post('/', async (req, res, next) => {
   try {
     const album = req.body;
-    if(!album) {
-      return res.status(422).send({error: 'Field is required'})
+    if (!album) {
+      return res.status(422).send({error: 'Field is required'});
     }
-    console.log(req.body.singer)
+
     const albumData: AlbumsMutation = {
       name: req.body.name,
       singer: req.body.singer,
@@ -58,11 +57,11 @@ albumsRouter.post("/", async (req, res, next) => {
       image: req.body.image,//req.file ? req.file.filename : null
     };
 
-    const albumForSend  = new Albums(albumData);
-    await  albumForSend.save();
+    const albumForSend = new Albums(albumData);
+    await albumForSend.save();
 
     return res.send(albumForSend);
-  }catch (e) {
+  } catch (e) {
     next(e);
   }
 });

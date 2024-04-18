@@ -7,14 +7,14 @@ const SALT_WORK_FACTOR = 10;
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema<UserMutation, UserModel, UserMethods> ({
+const UserSchema = new Schema<UserMutation, UserModel, UserMethods>({
   username: {
-    type:String,
+    type: String,
     required: true,
     unique: true
   },
   password: {
-    type:String,
+    type: String,
     required: true
   },
   token: {
@@ -24,17 +24,16 @@ const UserSchema = new Schema<UserMutation, UserModel, UserMethods> ({
 });
 
 UserSchema.method('checkPassword', async function (password: string) {
-  return await  bcrypt.compare(password, this.password);
+  return await bcrypt.compare(password, this.password);
 });
 
-UserSchema.methods.generateToken = function() {
+UserSchema.methods.generateToken = function () {
   this.token = randomUUID();
 };
 
 
-
-UserSchema.pre("save",async function (next) {
-  if(!this.isModified('password')) {
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
     return next();
   }
   const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
@@ -50,6 +49,6 @@ UserSchema.set('toJSON', {
 });
 
 
-const User = mongoose.model<UserMutation, UserModel>("User", UserSchema);
+const User = mongoose.model<UserMutation, UserModel>('User', UserSchema);
 
 export default User;

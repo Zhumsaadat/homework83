@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const ArtistsSchema = new Schema ({
+const ArtistsSchema = new Schema({
   name: {
     type: String,
     required: true

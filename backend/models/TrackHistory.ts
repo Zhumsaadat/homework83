@@ -5,10 +5,10 @@ import Tracks from './Tracks';
 
 const Schema = mongoose.Schema;
 
-const TrackHistorySchema = new Schema ({
+const TrackHistorySchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
     validate: {
       validator: async (value: Types.ObjectId) => User.findById(value),
@@ -17,7 +17,7 @@ const TrackHistorySchema = new Schema ({
   },
   track: {
     type: Schema.Types.ObjectId,
-    ref: "Tracks",
+    ref: 'Tracks',
     required: true,
     validate: {
       validator: async (value: Types.ObjectId) => Tracks.findOne(value),
@@ -26,10 +26,10 @@ const TrackHistorySchema = new Schema ({
   },
   datetime: {
     type: Date,
-    required: true,
+    default: Date.now,
   }
 });
 
-const TrackHistory = mongoose.model("TrackHistory", TrackHistorySchema);
+const TrackHistory = mongoose.model('TrackHistory', TrackHistorySchema);
 
 export default TrackHistory;

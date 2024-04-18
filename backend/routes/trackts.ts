@@ -7,8 +7,8 @@ const tracksRouter = express.Router();
 tracksRouter.get('/', async (req, res, next) => {
   try {
     let tracks;
-    if(req.query.album) {
-      tracks = await Tracks.find({ track: req.query.album }).populate("album", "_id name");
+    if (req.query.album) {
+      tracks = await Tracks.find({track: req.query.album}).populate('album', '_id name');
     } else {
       tracks = await Tracks.find();
     }
@@ -19,11 +19,11 @@ tracksRouter.get('/', async (req, res, next) => {
   }
 });
 
-tracksRouter.post("/", async (req, res, next) => {
+tracksRouter.post('/', async (req, res, next) => {
   try {
     const track = req.body;
-    if(!track) {
-      return res.status(422).send({error: 'Field is required'})
+    if (!track) {
+      return res.status(422).send({error: 'Field is required'});
     }
 
     const trackData: TracksMutation = {
@@ -32,11 +32,11 @@ tracksRouter.post("/", async (req, res, next) => {
       album: req.body.album,
     };
 
-    const newTrack  = new Tracks(trackData);
-    await  newTrack.save();
+    const newTrack = new Tracks(trackData);
+    await newTrack.save();
 
     return res.send(newTrack);
-  }catch (e) {
+  } catch (e) {
     next(e);
   }
 });

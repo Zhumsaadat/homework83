@@ -14,10 +14,10 @@ artistsRouter.get('/', async (req, res, next) => {
   }
 });
 
-artistsRouter.post("/", async (req, res, next) => {
+artistsRouter.post('/', async (req, res, next) => {
   try {
     const artists = req.body;
-    if(!artists) {
+    if (!artists) {
       return res.status(422).send({error: 'Field is required'})
     }
 
@@ -27,11 +27,11 @@ artistsRouter.post("/", async (req, res, next) => {
       info: req.body.info,
     };
 
-    const artist  = new Artists(artistsData);
-    await  artist.save();
+    const artist = new Artists(artistsData);
+    await artist.save();
 
-      return res.send(artist);
-  }catch (e) {
+    return res.send(artist);
+  } catch (e) {
     next(e);
   }
 });

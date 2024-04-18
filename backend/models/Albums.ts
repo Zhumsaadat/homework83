@@ -3,7 +3,7 @@ import Artists from './Artists';
 
 const Schema = mongoose.Schema;
 
-const AlbumsSchema = new Schema ({
+const AlbumsSchema = new Schema({
   name: {
     type: String,
     required: true
