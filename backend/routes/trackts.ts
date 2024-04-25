@@ -1,15 +1,19 @@
 import express from 'express';
 import { TracksMutation } from '../types';
 import Tracks from '../models/Tracks';
-import { Types } from 'mongoose';
+import {  Types } from 'mongoose';
+
+
+
+
 
 const tracksRouter = express.Router();
 
 tracksRouter.get('/', async (req, res, next) => {
   try {
     let tracks;
-    if (req.query.album) {
-      tracks = await Tracks.find({track: req.query.album}).populate('album', '_id name');
+    if (req.query.album){
+      //tracks = await Tracks.find({album: new Types.ObjectId(req.query.album)});
     } else {
       tracks = await Tracks.find();
     }

@@ -12,6 +12,10 @@ const TracksSchema = new Schema({
     type: String,
     required: true
   },
+  sequence: {
+    type: Number,
+    required: true,
+  },
   album: {
     type: Schema.Types.ObjectId,
     ref: 'Albums',
