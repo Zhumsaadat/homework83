@@ -1,6 +1,7 @@
 import mongoose, { Types } from 'mongoose';
 import User from './User';
 import Tracks from './Tracks';
+import { TrackHistoryMutation } from '../types';
 
 
 const Schema = mongoose.Schema;
@@ -26,10 +27,12 @@ const TrackHistorySchema = new Schema({
   },
   datetime: {
     type: Date,
+    required: true,
     default: Date.now,
   }
 });
 
-const TrackHistory = mongoose.model('TrackHistory', TrackHistorySchema);
+
+const TrackHistory = mongoose.model<TrackHistoryMutation>('TrackHistory', TrackHistorySchema);
 
 export default TrackHistory;

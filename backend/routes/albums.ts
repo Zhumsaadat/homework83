@@ -2,6 +2,7 @@ import express from 'express';
 import { AlbumsMutation } from '../types';
 import Albums from '../models/Albums';
 import { Types } from 'mongoose';
+import { imagesUpload } from '../multer';
 
 const albumsRouter = express.Router();
 
@@ -43,7 +44,7 @@ albumsRouter.get('/:id', async (req, res, next) => {
 });
 
 
-albumsRouter.post('/', async (req, res, next) => {
+albumsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
   try {
     const album = req.body;
     if (!album) {
@@ -54,7 +55,7 @@ albumsRouter.post('/', async (req, res, next) => {
       name: req.body.name,
       singer: req.body.singer,
       date: req.body.date,
-      image: req.body.image,//req.file ? req.file.filename : null
+      image: req.file ? req.file.filename : null,
     };
 
     const albumForSend = new Albums(albumData);

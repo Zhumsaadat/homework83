@@ -13,12 +13,13 @@ const port = 8000;
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static('public'));
 
 app.use('/artists', artistsRouter);
 app.use('/albums', albumsRouter);
 app.use('/tracks', tracksRouter);
 app.use('/users', user);
-app.use('/track_history', trackHistoryRouter);
+app.use('/track_histories', trackHistoryRouter);
 
 
 const run = async () => {

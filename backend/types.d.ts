@@ -32,6 +32,7 @@ export interface TrackHistoryMutation {
   datetime: Date;
 }
 
+
 interface UserMethods {
   checkPassword(password: string): Promise<boolean>;
   generateToken(): void;
