@@ -9,8 +9,9 @@ const albumsRouter = express.Router();
 albumsRouter.get('/', async (req, res, next) => {
   try {
     let albums;
-    if (req.query.artist) {
-      albums = await Albums.find({artist: req.query.artist}).populate('singer', '_id name');
+    const singer = req.query.singer as string
+    if (singer) {
+      albums = await Albums.find({singer: singer});
     } else {
       albums = await Albums.find().populate('singer', '_id name');
     }
