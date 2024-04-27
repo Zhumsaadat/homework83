@@ -1,10 +1,10 @@
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Albums from './containers/Albums';
 import Artists from './containers/Artists';
 import Tracks from './containers/Tracks';
 import Home from './containers/Home';
 import AppBarSpotify from './containers/AppBar';
-import { useState } from 'react';
+import Add from './components/Add';
 
 function App() {
    return (
@@ -12,13 +12,14 @@ function App() {
            <header>
               <AppBarSpotify />
            </header>
-           <main>
+           <main className="container-fluid">
                <Routes>
                <Route path={'/'} element={(<Home/>)}></Route>
                <Route path={'/albums'} element={(<Albums/>)} />
                <Route path={'/artists'} element={(<Artists />)} />
                <Route path={'/tracks'} element={(<Tracks/>)} />
                <Route path="*" element={<h1>Not found</h1>}/>
+               <Route path='add' element={(<Add/>)} />
                </Routes>
            </main>
 

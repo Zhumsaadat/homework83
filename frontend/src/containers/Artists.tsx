@@ -3,11 +3,11 @@ import ArtistItem from '../components/ArtistItem';
 import { ArtistApi } from '../../types';
 import axiosApi from '../axiosApi';
 import { Grid } from '@mui/material';
+import Spinner from '../components/Spinner';
 
-interface Props {
-    showAlbums: (id: string) => void;
-}
-const Artists: React.FC<Props> = ({showAlbums}) => {
+
+
+const Artists: React.FC = () => {
     const [artists, setArtist] = useState<ArtistApi[]>([]);
     const [loading, setLoading] = useState(false);
 
@@ -20,7 +20,6 @@ const Artists: React.FC<Props> = ({showAlbums}) => {
                 setArtist([]);
                 return
             }
-
             setArtist(artist);
         }finally {
             setLoading(false);
@@ -32,8 +31,10 @@ const Artists: React.FC<Props> = ({showAlbums}) => {
         void fetchArtist();
     },[fetchArtist]);
 
-    return (
-        <div>
+    return ( loading? (
+            <Spinner />
+        ): (
+            <div>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 {artists.map((artist, index) => (
                     <Grid   item xs={4} sm={4} md={4} key={index} style={{ marginTop: '50px' }}>
@@ -42,6 +43,8 @@ const Artists: React.FC<Props> = ({showAlbums}) => {
                 ))}
             </Grid>
         </div>
+        )
+
     );
 };
 

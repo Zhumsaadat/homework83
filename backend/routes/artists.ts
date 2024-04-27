@@ -1,6 +1,7 @@
 import express from 'express';
 import Artists from '../models/Artists';
 import { Artist } from '../types';
+import { imagesUpload } from '../multer';
 
 const artistsRouter = express.Router();
 
@@ -14,7 +15,7 @@ artistsRouter.get('/', async (req, res, next) => {
   }
 });
 
-artistsRouter.post('/', async (req, res, next) => {
+artistsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
   try {
     const artists = req.body;
     if (!artists) {
@@ -23,7 +24,7 @@ artistsRouter.post('/', async (req, res, next) => {
 
     const artistsData: Artist = {
       name: req.body.name,
-      image: req.body.image,
+      image: req.file ? req.file.filename : null,
       info: req.body.info,
     };
 

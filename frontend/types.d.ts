@@ -18,3 +18,11 @@ export interface AlbumApi {
     name: string;
     singer: string
 }
+
+export  interface  TrackApi {
+    __v: number;
+    _id: string;
+    album: string;
+    duration: string;
+    name: string
+}

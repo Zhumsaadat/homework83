@@ -2,6 +2,7 @@ import express from 'express';
 import { TracksMutation } from '../types';
 import Tracks from '../models/Tracks';
 import {  Types } from 'mongoose';
+import Albums from '../models/Albums';
 
 
 
@@ -12,10 +13,10 @@ const tracksRouter = express.Router();
 tracksRouter.get('/', async (req, res, next) => {
   try {
     let tracks;
-    const album = req.query.album
-    if (album){
-     // tracks = await Tracks.find({album: album});
-    } else {
+    const album = req.query.album as string
+    if (album) {
+      tracks = await Tracks.find({album: album});
+    }  else {
       tracks = await Tracks.find();
     }
 
