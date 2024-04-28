@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-import { ArtistApi } from '../../types';
+import { ArtistApi } from '../../../types';
 import { useNavigate } from 'react-router-dom';
-import Spinner from './Spinner';
-import axiosApi from '../axiosApi';
-import imageNotAvailable from '../assets/imageNotAvailable.png'
+import Spinner from '../Spinner';
+import axiosApi from '../../axiosApi';
+import imageNotAvailable from '../../assets/imageNotAvailable.png'
 
 interface Props {
     artist: ArtistApi;

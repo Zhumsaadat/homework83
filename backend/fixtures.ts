@@ -6,7 +6,6 @@ import Albums from './models/Albums';
 import Artists from './models/Artists';
 import albums from './routes/albums';
 import Tracks from './models/Tracks';
-import { log } from 'util';
 
 const run = async () => {
   await mongoose.connect(config.db);

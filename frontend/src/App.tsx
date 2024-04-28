@@ -5,6 +5,7 @@ import Tracks from './containers/Tracks';
 import Home from './containers/Home';
 import AppBarSpotify from './containers/AppBar';
 import Add from './components/Add';
+import Register from './components/usets/Register';
 
 function App() {
    return (
@@ -18,6 +19,7 @@ function App() {
                <Route path={'/albums'} element={(<Albums/>)} />
                <Route path={'/artists'} element={(<Artists />)} />
                <Route path={'/tracks'} element={(<Tracks/>)} />
+               <Route path={'/register'} element={(<Register />)} />
                <Route path="*" element={<h1>Not found</h1>}/>
                <Route path='add' element={(<Add/>)} />
                </Routes>

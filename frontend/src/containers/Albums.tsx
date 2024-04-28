@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import axiosApi from '../axiosApi';
-import { Container, Grid } from '@mui/material';
-import AlbumItem from '../components/AlbumItems';
+import { Grid } from '@mui/material';
+import AlbumItem from '../components/albums/AlbumItems';
 import Spinner from '../components/Spinner';
 
 const Albums = () => {

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import axiosApi from '../axiosApi';
 import { Grid } from '@mui/material';
-import TrackItem from '../components/TrackItem';
+import TrackItem from '../components/tracks/TrackItem';
 import Spinner from '../components/Spinner';
 
 

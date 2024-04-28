@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import ArtistItem from '../components/ArtistItem';
+import ArtistItem from '../components/artists/ArtistItem';
 import { ArtistApi } from '../../types';
 import axiosApi from '../axiosApi';
 import { Grid } from '@mui/material';

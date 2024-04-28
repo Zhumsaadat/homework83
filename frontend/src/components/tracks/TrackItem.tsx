@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Paper } from '@mui/material';
-import { TrackApi } from '../../types';
+import { TrackApi } from '../../../types';
 
 interface Props {
     track: TrackApi;

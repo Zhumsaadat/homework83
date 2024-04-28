@@ -2,7 +2,6 @@ import express from 'express';
 import { TracksMutation } from '../types';
 import Tracks from '../models/Tracks';
 import {  Types } from 'mongoose';
-import Albums from '../models/Albums';
 
 
 
