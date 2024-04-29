@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import { UserMethods, UserModel, UserMutation } from '../types';
 import { randomUUID } from 'crypto';
+import mongoose, { HydratedDocument } from 'mongoose';
 
 const SALT_WORK_FACTOR = 10;
 
@@ -13,11 +13,12 @@ const UserSchema = new Schema<UserMutation, UserModel, UserMethods>({
     required: true,
     unique: true,
     validate: {
-      validator: async (value: string) => {
-        const user = await User.findOne({username: value});
-        if (user) return false;
+      validator: async function (this: HydratedDocument<UserMutation>, username: string): Promise<boolean> {
+        if (!this.isModified('username')) return true;
+        const user: HydratedDocument<UserMutation> | null = await User.findOne({username});
+        return !Boolean(user);
       },
-      message: 'This user is already registered'
+      message: 'This user is already registered',
     }
   },
   password: {

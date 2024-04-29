@@ -1,5 +1,5 @@
-import express from "express";
-import cors from "cors";
+import express from 'express';
+import cors from 'cors';
 import artistsRouter from './routes/artists';
 import mongoose from 'mongoose';
 import config from './config';
@@ -19,7 +19,7 @@ app.use('/artists', artistsRouter);
 app.use('/albums', albumsRouter);
 app.use('/tracks', tracksRouter);
 app.use('/users', user);
-app.use('/track_histories', trackHistoryRouter);
+app.use('/track_history', trackHistoryRouter);
 
 
 const run = async () => {

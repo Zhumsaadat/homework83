@@ -1,30 +1,24 @@
-export interface ArtistApi{
-    __v: number;
+export interface ArtistsTypes {
     _id: string;
+    name: string;
     image: string | null;
     info: string;
-    name: string;
 }
 
-export interface ArtistsApi{
-    [key: string]: ArtistApi[];
-}
-
-export interface AlbumApi {
-    __v: number;
+export interface AlbumsTypes {
     _id: string;
-    image: string | null;
-    date: number;
+    artist: string;
     name: string;
-    singer: string
+    release: string;
+    image: string | null;
 }
 
-export  interface  TrackApi {
-    __v: number;
+export interface TracksTypes {
     _id: string;
     album: string;
+    name: string;
     duration: string;
-    name: string
+    number: number;
 }
 
 export interface RegisterMutation {
@@ -36,15 +30,11 @@ export interface LoginMutation {
     username: string;
     password: string;
 }
-export interface User {
+
+export interface UserTypes {
     _id: string;
     username: string;
     token: string;
-}
-
-export interface RegisterResponse {
-    user: User;
-    massage: string;
 }
 
 export interface ValidationError {
@@ -52,13 +42,35 @@ export interface ValidationError {
         [key: string]: {
             name: string;
             message: string;
-        }
+        },
     },
     message: string;
     name: string;
     _message: string;
 }
 
-export  interface GlobalError {
+export interface RegisterResponse {
+    message: string;
+    user: UserTypes;
+}
+
+export interface GlobalError {
     error: string;
+}
+
+export interface tracksHistoryTypes {
+    token: string;
+    track: string;
+}
+
+export interface History {
+    _id: string;
+    user: string;
+    track: {
+        album: {
+            artist: string;
+        };
+        name: string;
+    };
+    datetime: string;
 }

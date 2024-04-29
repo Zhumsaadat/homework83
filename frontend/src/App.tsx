@@ -1,36 +1,34 @@
+import { Alert } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
-import Albums from './containers/Albums';
-import Artists from './containers/Artists';
-import Tracks from './containers/Tracks';
-import Home from './containers/Home';
-import AppBarSpotify from './containers/AppBar';
-import Add from './components/Add';
+import { useAppSelector } from './app/hooks';
+import { selectUser } from './store/users/usersSlice';
+import AppToolbar from './components/AppToolBar/AppBar';
+import Artists from './features/Artists';
+import Albums from './features/Albums';
+import Tracks from './features/Tracks';
 import Register from './components/usets/Register';
+import Login from './components/usets/Login';
+import TracksHistory from './store/track/TracsHistory';
 
 function App() {
-   return (
-       <>
-           <header>
-              <AppBarSpotify />
-           </header>
-           <main className="container-fluid">
-               <Routes>
-               <Route path={'/'} element={(<Home/>)}></Route>
-               <Route path={'/albums'} element={(<Albums/>)} />
-               <Route path={'/artists'} element={(<Artists />)} />
-               <Route path={'/tracks'} element={(<Tracks/>)} />
-               <Route path={'/register'} element={(<Register />)} />
-               <Route path="*" element={<h1>Not found</h1>}/>
-               <Route path='add' element={(<Add/>)} />
-               </Routes>
-           </main>
+    const user = useAppSelector(selectUser);
 
-
-
-       </>
-   );
-
-
+    return (
+        <>
+            <header>
+                <AppToolbar />
+            </header>
+            <Routes>
+                <Route path="/" element={user && <Artists />} />
+                <Route path="/albums/:id" element={user && <Albums />} />
+                <Route path="/tracks/:id" element={user && <Tracks />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/track_history" element={<TracksHistory />} />
+                <Route path="*" element={<Alert severity="error">Not found!</Alert>} />
+            </Routes>
+        </>
+    )
 }
 
-export default App
+export default App;
