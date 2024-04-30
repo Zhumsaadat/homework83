@@ -18,7 +18,7 @@ export interface TracksTypes {
     album: string;
     name: string;
     duration: string;
-    number: number;
+    sequence: number;
 }
 
 export interface RegisterMutation {

@@ -12,8 +12,10 @@ albumsRouter.get('/', async (req, res, next) => {
     const singer = req.query.singer as string
     if (singer) {
       albums = await Albums.find({singer: singer}).sort({ date: -1 });
+
     } else {
       albums = await Albums.find().populate('singer', '_id name').sort({date: -1});
+
     }
 
     res.send(albums);

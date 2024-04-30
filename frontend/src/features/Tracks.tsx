@@ -58,7 +58,7 @@ const Tracks = () => {
                         <PlayCircleIcon />
                       </Grid>
                       <Grid xs={2} >
-                        {elem.number}
+                        {elem.sequence}
                       </Grid>
                       <Grid xs={6}>
                         {elem.name}

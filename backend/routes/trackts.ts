@@ -11,7 +11,7 @@ tracksRouter.get('/', async (req, res, next) => {
     let tracks;
     const album = req.query.album as string
     if (album) {
-      tracks = await Tracks.find({album: album});
+      tracks = await Tracks.find({album: album}).sort({sequence: 1});
     }  else {
       tracks = await Tracks.find();
     }
@@ -27,7 +27,7 @@ tracksRouter.get('/:id', async (req, res, next) => {
     let _id: Types.ObjectId;
 
     try {
-      _id = new Types.ObjectId(req.params.id);
+      _id = new Types.ObjectId(req.params.id)
     } catch (e) {
       return res.status(404).send({error: 'Wrong ObjectId'});
     }
