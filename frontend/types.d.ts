@@ -7,9 +7,9 @@ export interface ArtistsTypes {
 
 export interface AlbumsTypes {
     _id: string;
-    artist: string;
+    singer: string;
     name: string;
-    release: string;
+    date: string;
     image: string | null;
 }
 

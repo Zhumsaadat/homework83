@@ -58,7 +58,7 @@ const Albums = () => {
                                             {elem.name}
                                         </Typography>
                                         <Typography component="div">
-                                            {'Release: ' + elem.release}
+                                            {'Release: ' + elem.date}
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>

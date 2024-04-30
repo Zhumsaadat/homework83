@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { UserTypes } from '../../../types';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import PersonIcon from '@mui/icons-material/Person';
 
 interface Props {
     user: UserTypes;
@@ -26,7 +27,8 @@ const UserMenu: React.FC<Props> = ({user}) => {
     return (
         <>
             <Button color="inherit" onClick={handleClick}>
-                Hello, {user.username}!
+                <PersonIcon/>
+
             </Button>
             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} keepMounted>
                 <MenuItem>Profile</MenuItem>

@@ -6,9 +6,9 @@ import AppToolbar from './components/AppToolBar/AppBar';
 import Artists from './features/Artists';
 import Albums from './features/Albums';
 import Tracks from './features/Tracks';
-import Register from './components/usets/Register';
-import Login from './components/usets/Login';
 import TracksHistory from './store/track/TracsHistory';
+import Login from './features/Users/Login';
+import Register from './features/Users/Register';
 
 function App() {
     const user = useAppSelector(selectUser);
