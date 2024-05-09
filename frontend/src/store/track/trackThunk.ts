@@ -23,7 +23,6 @@ export const tracksHistoryPost = createAsyncThunk<void, tracksHistoryTypes>(
             const headers = {
                 'Authorization': `Bearer ${data.token}`,
             };
-
             await axiosApi.post<tracksHistoryTypes>('/track_history', {track: data.track}, {headers});
         } catch (err) {
             throw err;

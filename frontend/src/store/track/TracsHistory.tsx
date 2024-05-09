@@ -30,7 +30,6 @@ const TracksHistory = () => {
   }, [dispatch]);
 
   const sortedHistory = history.slice().sort((date, time) => time.datetime.localeCompare(date.datetime));
-
   return (
     <>
       <Grid container sx={{flexDirection: 'column', alignItems: 'center', gap: 3}}>

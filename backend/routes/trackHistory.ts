@@ -1,53 +1,33 @@
 import express from 'express';
-import User from '../models/User';
 import TrackHistory from '../models/TrackHistory';
+import auth, { RequestWithUser } from '../middleware/auth';
 
 
 const trackHistoryRouter = express.Router();
 
-trackHistoryRouter.get('/',  async (req, res, next) => {
+trackHistoryRouter.get('/', auth, async (req, res, next) => {
   try {
-    const headerValue = req.headers.authorization;
-
-    if (!headerValue) {
-      return res.status(401).send({error: 'No token present'});
-    }
-    const [_, token] = headerValue.split(' ');
-
-    const user = await User.findOne({token});
-
+    const user = (req as RequestWithUser).user;
     if (!user) {
-      return res.status(401).send({error: 'Unauthorized'});
+      return res.status(403).send({ error: 'Wrong token!' });
     }
 
-    const tracksHistory = await TrackHistory.find().populate('track');
+      const userId = user._id.toString();
+      const tracksHistory = await TrackHistory.find({user: userId}).populate('track');
 
-    return res.send(tracksHistory);
+      return res.send(tracksHistory);
   } catch (err) {
     return next(err);
   }
 });
 
-trackHistoryRouter.post('/',  async (req, res, next) => {
+trackHistoryRouter.post('/', auth,  async (req, res, next) => {
   try {
-    const headerValue = req.headers.authorization;
-
-    if (!headerValue) {
-      return res.status(401).send({error: 'No token present'});
-    }
-    const [_, token] = headerValue.split(' ');
-
-    const user = await User.findOne({token});
-
-    if (!user) {
-      return res.status(401).send({error: 'Unauthorized'});
-    }
-
-
+    const user = (req as RequestWithUser).user;
     const trackHistoryData = new TrackHistory({
-        'user': user._id,
+        'user': user?._id,
         'track': req.body.track,
-        'datetime': req.body.datetime,
+        'datetime': Date.now(),
       });
 
       await trackHistoryData.save();

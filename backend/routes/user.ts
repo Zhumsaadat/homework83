@@ -13,8 +13,8 @@ usersRouter.post('/', async (req, res, next) => {
 
     user.generateToken();
     await user.save();
-    
-    return res.send(user);
+
+    return res.send({ message: 'Registered successfully!', user });
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
       return res.status(422).send(e);
@@ -23,22 +23,26 @@ usersRouter.post('/', async (req, res, next) => {
   }
 });
 
-usersRouter.post('/sessions', async (req, res) => {
-  const user = await User.findOne({username: req.body.username});
+usersRouter.post('/sessions', async (req, res, next) => {
+  try{
+    const user = await User.findOne({username: req.body.username});
 
-  if (!user) {
-    return res.status(400).send({error: 'Username or Password not correct!'});
+    if (!user) {
+      return res.status(400).send({error: 'Username or Password not correct!'});
+    }
+    const isMatch = await user.checkPassword(req.body.password);
+
+    if (!isMatch) {
+      return res.status(400).send({error: 'Username or Password not correct!'});
+    }
+
+    user.generateToken();
+    await user.save();
+
+    return res.send({message: 'Username and Password correct!', user});
+  }catch (e) {
+    next(e)
   }
-  const isMatch = await user.checkPassword(req.body.password);
-
-  if (!isMatch) {
-    return res.status(400).send({error: 'Username or Password not correct!'});
-  }
-
-  user.generateToken();
-  await user.save();
-
-  return res.send({message: 'Username and Password correct!', user});
 
 });
 

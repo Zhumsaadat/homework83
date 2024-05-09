@@ -12,7 +12,7 @@ const usersPersistConfig = {
   key: 'music:users',
   storage: storage,
   whitelist: ['user'],
-}
+};
 
 const rootReducer = combineReducers({
   artists: artistsReducer,
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   tracks: tracksReducer,
   users: persistReducer(usersPersistConfig, usersReducer),
   tracksHistory: tracksHistoryReducer,
-})
+});
 
 export const store = configureStore({
   reducer: rootReducer,

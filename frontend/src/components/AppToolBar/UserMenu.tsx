@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
-import { UserTypes } from '../../../types';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
+import { useAppDispatch } from '../../app/hooks';
+import { unsetUser } from '../../store/users/usersSlice';
+import { logout } from '../../store/users/usersThunk';
 
-interface Props {
-    user: UserTypes;
-}
 
-const UserMenu: React.FC<Props> = ({user}) => {
+const UserMenu = () => {
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    const dispatch = useAppDispatch();
+
+
+  const handleLogout = () => {
+    dispatch(unsetUser(logout()));
+  };
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -34,7 +39,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>My account</MenuItem>
                 <MenuItem onClick={handleNav}>Track history</MenuItem>
-                <MenuItem>Logout</MenuItem>
+                <MenuItem onClick={handleLogout} >Logout</MenuItem>
             </Menu>
         </>
     );

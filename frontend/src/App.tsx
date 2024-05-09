@@ -19,16 +19,16 @@ function App() {
                 <AppToolbar />
             </header>
             <Routes>
-                <Route path="/" element={user && <Artists />} />
-                <Route path="/albums/:id" element={user && <Albums />} />
-                <Route path="/tracks/:id" element={user && <Tracks />} />
+                <Route path="/" element={<Artists />} />
+                <Route path="/albums/:id" element={<Albums />} />
+                <Route path="/tracks/:id" element={<Tracks />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/track_history" element={<TracksHistory />} />
                 <Route path="*" element={<Alert severity="error">Not found!</Alert>} />
             </Routes>
         </>
-    )
+    );
 }
 
 export default App;

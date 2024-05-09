@@ -22,7 +22,8 @@ const Tracks = () => {
     const params = useParams();
 
     const album = albumName.find(elem => elem._id === params.id);
-    const artist = artistName.find(elem => elem._id === album?.artist);
+    const artist = artistName.find(elem => elem._id === album?.singer);
+
 
     useEffect(() => {
         const fetchUrl = async () => {
@@ -41,7 +42,11 @@ const Tracks = () => {
 
     const tracksHistory = async (data: string) => {
         if (user) {
-            await dispatch(tracksHistoryPost({token: user.token, track: data}));
+          const trackHistory = {
+            token: user.token,
+            track: data
+          }
+            await dispatch(tracksHistoryPost(trackHistory));
         }
     };
 
@@ -51,19 +56,19 @@ const Tracks = () => {
 
             <Grid container>
                 {!isLoading ? tracks.map((elem) => (
-                  <Grid direction='row' xs={12} sm={12} md={12} key={elem._id} style={{ marginTop: '20px' }}>
+                  <Grid item  xs={12} sm={12} md={12} key={elem._id} style={{ marginTop: '20px' }}>
                      <Paper elevation={3} sx={{ padding: '12px'}} >
                     <Grid container>
-                      <Grid xs={2} onClick={() => tracksHistory(elem._id)}>
+                      <Grid item xs={2} onClick={() => tracksHistory(elem._id)}>
                         <PlayCircleIcon />
                       </Grid>
-                      <Grid xs={2} >
+                      <Grid item xs={2}  sm={2}  md={2} >
                         {elem.sequence}
                       </Grid>
-                      <Grid xs={6}>
+                      <Grid item xs={6}  sm={6}  md={6}>
                         {elem.name}
                       </Grid>
-                      <Grid xs={2}>
+                      <Grid item xs={2}  sm={2}  md={2}>
                         {elem.duration}
                       </Grid>
                     </Grid>
