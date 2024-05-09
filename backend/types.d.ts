@@ -5,19 +5,22 @@ export interface Artist {
   name: string;
   image: string | null;
   info: string;
+  isPublished: boolean;
 }
 
 export interface AlbumsMutation {
   name: string;
   singer: string;
   date: number;
-  image: string | null
+  image: string | null;
+  isPublished: boolean;
 }
 
 export interface TracksMutation {
   name: string;
   duration: string;
-  album: string
+  album: string;
+  isPublished: boolean;
 }
 
 export interface UserMutation {

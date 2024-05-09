@@ -16,6 +16,11 @@ const TracksSchema = new Schema({
     type: Number,
     required: true,
   },
+  isPublished:{
+    type: Boolean,
+    required: true,
+    default: false
+  },
   album: {
     type: Schema.Types.ObjectId,
     ref: 'Albums',
