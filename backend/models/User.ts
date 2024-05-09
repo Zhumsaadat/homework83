@@ -28,6 +28,12 @@ const UserSchema = new Schema<UserMutation, UserModel, UserMethods>({
   token: {
     type: String,
     required: true
+  },
+  role: {
+    type: String,
+    required: true,
+    enum: ['admin', 'listener'],
+    default: 'listener',
   }
 });
 

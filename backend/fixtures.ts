@@ -21,6 +21,19 @@ const run = async () => {
     console.log('Collections were not present, skipping drop...')
   }
 
+  await User.create({
+    username: 'user',
+    password: '123',
+    token: crypto.randomUUID(),
+    role: 'listener'
+  },
+    {
+      username: 'admin',
+      password: '123',
+      token: crypto.randomUUID(),
+      role: 'admin'
+  })
+
   const [stingArtists, WhitneyArtists]= await Artists.create({
     name: 'Sting',
     image: 'images/sting.jpeg',
