@@ -72,4 +72,14 @@ tracksRouter.post('/',
   }
 });
 
+tracksRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
+  try {
+    const trackId = req.params.id;
+    await Tracks.findByIdAndDelete(trackId);
+    return  res.status(204).send({message: 'Track is deleted'});
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default tracksRouter;

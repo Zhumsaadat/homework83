@@ -43,4 +43,14 @@ artistsRouter.post('/',
   }
 });
 
+artistsRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
+  try {
+    const artistId = req.params.id;
+    await Artists.findByIdAndDelete(artistId);
+    return  res.status(204).send({message: 'Artist is deleted'});
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default artistsRouter;

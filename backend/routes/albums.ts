@@ -6,6 +6,7 @@ import { imagesUpload } from '../multer';
 import permit from '../middleware/permit';
 import auth from '../middleware/auth';
 
+
 const albumsRouter = express.Router();
 
 albumsRouter.get('/', async (req, res, next) => {
@@ -73,6 +74,16 @@ albumsRouter.post('/',
     return res.send(albumForSend);
   } catch (e) {
     next(e);
+  }
+});
+
+albumsRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
+  try {
+    const albumId = req.params.id;
+    await Albums.findByIdAndDelete(albumId);
+    return  res.status(204).send({message: 'Album is deleted'});
+  } catch (error) {
+    next(error);
   }
 });
 
