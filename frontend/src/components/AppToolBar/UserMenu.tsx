@@ -14,7 +14,7 @@ const UserMenu = () => {
 
 
   const handleLogout = () => {
-    dispatch(unsetUser(logout()));
+    dispatch(unsetUser());
   };
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {

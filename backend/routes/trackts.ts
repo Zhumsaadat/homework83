@@ -2,6 +2,8 @@ import express from 'express';
 import { TracksMutation } from '../types';
 import Tracks from '../models/Tracks';
 import { Types } from 'mongoose';
+import permit from '../middleware/permit';
+import auth, { RequestWithUser } from '../middleware/auth';
 
 
 const tracksRouter = express.Router();
@@ -44,7 +46,9 @@ tracksRouter.get('/:id', async (req, res, next) => {
   }
 });
 
-tracksRouter.post('/', async (req, res, next) => {
+tracksRouter.post('/',
+  auth,
+  async (req: RequestWithUser, res, next) => {
   try {
     const track = req.body;
     if (!track) {
@@ -55,6 +59,8 @@ tracksRouter.post('/', async (req, res, next) => {
       name: req.body.name,
       duration: req.body.duration,
       album: req.body.album,
+      isPublished: req.body.isPublished,
+      sequence: req.body.sequence,
     };
 
     const newTrack = new Tracks(trackData);

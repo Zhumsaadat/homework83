@@ -2,6 +2,8 @@ import express from 'express';
 import Artists from '../models/Artists';
 import { Artist } from '../types';
 import { imagesUpload } from '../multer';
+import auth, { RequestWithUser } from '../middleware/auth';
+import permit from '../middleware/permit';
 
 const artistsRouter = express.Router();
 
@@ -15,7 +17,10 @@ artistsRouter.get('/', async (req, res, next) => {
   }
 });
 
-artistsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
+artistsRouter.post('/',
+  auth,
+  imagesUpload.single('image'),
+  async (req: RequestWithUser, res, next) =>{
   try {
     const artists = req.body;
     if (!artists) {
@@ -26,6 +31,7 @@ artistsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => 
       name: req.body.name,
       image: req.file ? req.file.filename : null,
       info: req.body.info,
+      isPublished: req.body.isPublished,
     };
 
     const artist = new Artists(artistsData);

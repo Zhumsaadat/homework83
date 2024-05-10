@@ -21,6 +21,7 @@ export interface TracksMutation {
   duration: string;
   album: string;
   isPublished: boolean;
+  sequence: number;
 }
 
 export interface UserMutation {

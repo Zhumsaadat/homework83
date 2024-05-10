@@ -3,6 +3,8 @@ import { AlbumsMutation } from '../types';
 import Albums from '../models/Albums';
 import { Types } from 'mongoose';
 import { imagesUpload } from '../multer';
+import permit from '../middleware/permit';
+import auth from '../middleware/auth';
 
 const albumsRouter = express.Router();
 
@@ -47,7 +49,10 @@ albumsRouter.get('/:id', async (req, res, next) => {
 });
 
 
-albumsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
+albumsRouter.post('/',
+  auth,
+  imagesUpload.single('image'),
+  async (req, res, next) => {
   try {
     const album = req.body;
     if (!album) {
@@ -57,8 +62,9 @@ albumsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
     const albumData: AlbumsMutation = {
       name: req.body.name,
       singer: req.body.singer,
-      date: parseInt(req.body.date, 10),
+      date: Date.now(),
       image: req.file ? req.file.filename : null,
+      isPublished: req.body.isPublished,
     };
 
     const albumForSend = new Albums(albumData);
