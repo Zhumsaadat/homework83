@@ -34,7 +34,7 @@ const run = async () => {
       role: 'admin'
   })
 
-  const [stingArtists, WhitneyArtists]= await Artists.create({
+  const [stingArtists, WhitneyArtists, shakira]= await Artists.create({
     name: 'Sting',
     image: 'images/sting.jpeg',
     info: 'Го́рдон Мэ́ттью То́мас Са́мнер, более известный под псевдонимом Стинг — английский музыкант-мультиинструменталист, певец и автор песен, актёр, общественный деятель и филантроп. Вокалист группы The Police в 1976—1984 годах. С 1984 года — сольный исполнитель.',
@@ -44,9 +44,15 @@ const run = async () => {
     image: 'images/whitney.jpeg',
     info: 'Уи́тни Эли́забет Хью́стон — американская актриса кино и телевидения, поп-, соул- и ритм-энд-блюзовая певица, продюсер и фотомодель. Одна из самых коммерчески успешных исполнительниц в истории мировой музыки.',
     isPublished: true,
-    });
+    },
+    {
+    name: 'Shakira',
+    image: 'images/shac.webp',
+    info: 'Шаки́ра Изабе́ль Меба́рак Рипо́ль, известная мононимно как Шакира — колумбийская певица, автор песен, танцовщица, музыкальный продюсер, хореограф и модель. ',
+    isPublished: false,
+   });
 
-  const [SummonerAlbums, BringAlbums, loveAlbums, iLookAlbums] = await Albums.create({
+  const [SummonerAlbums, BringAlbums, loveAlbums, iLookAlbums, SaleElSol] = await Albums.create({
     name: 'Ten Summoner’s Tales',
     date: 1993,
     image: 'images/summoner.jpeg',
@@ -69,8 +75,14 @@ const run = async () => {
       date: 2009,
       image: 'images/Ilook to you.jpeg',
       singer: WhitneyArtists._id,
+      isPublished: true,
+    },{
+      name: 'Sale el sol',
+      date: 2010,
+      image: 'images/Sol.jpg',
+      singer: shakira._id,
       isPublished: false,
-    });
+   });
 
   await Tracks.create({
     name: 'If I Ever Lose My Faith in You',
@@ -95,13 +107,13 @@ const run = async () => {
     duration: '3:39',
     sequence: 4,
     album: SummonerAlbums._id,
-    isPublished: false,
+    isPublished: true,
   },{
     name: 'She’s Too Good for Me',
     duration: '2:30',
     sequence: 6,
     album: SummonerAlbums._id,
-    isPublished: false,
+    isPublished: true,
   },{
     name: 'Bring on the Night/When the World Is Running Down You Make the Best of What’s Still Around',
     duration: '11:41',
@@ -131,7 +143,7 @@ const run = async () => {
     duration: '6.59',
     sequence: 5,
     album: BringAlbums._id,
-    isPublished: false,
+    isPublished: true,
   }, {
     name: 'It’s Not Right, But It’s Okay',
     duration: '4:52',
@@ -161,7 +173,7 @@ const run = async () => {
     duration: '4:37',
     sequence: 5,
     album: loveAlbums._id,
-    isPublished: false,
+    isPublished: true,
   },{
     name: 'It’s Not Right, But It’s Okay',
     duration: '4:52',
@@ -192,6 +204,24 @@ const run = async () => {
     sequence: 5,
     album: iLookAlbums._id,
     isPublished: true,
+  },{
+    name: 'Sale el Sol',
+    duration: '3:20',
+    sequence: 1,
+    album: SaleElSol._id,
+    isPublished: false,
+  }, {
+    name: 'Antes de las Seis',
+    duration: '2:56',
+    sequence: 2,
+    album: SaleElSol._id,
+    isPublished: false,
+  }, {
+    name: 'Addicted to You',
+    duration: '2:37',
+    sequence: 3,
+    album: SaleElSol._id,
+    isPublished: false,
   });
 
   await db.close();
