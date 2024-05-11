@@ -1,6 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi.ts';
-import { AlbumsTypes } from '../../../types';
+import { AlbumMutation, AlbumsTypes } from '../../../types';
+import { RootState } from '../../app/store';
 
 export const getAlbums = createAsyncThunk<AlbumsTypes[], string>(
     'albums/get',
@@ -14,4 +15,21 @@ export const getAlbums = createAsyncThunk<AlbumsTypes[], string>(
 
         return items;
     },
+);
+
+export const createAlbum = createAsyncThunk<void, AlbumMutation, {state: RootState}>(
+  'albums/create',
+  async (album, thunkApi) => {
+    try{
+      const token = thunkApi.getState().users.user?.token;
+
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`,
+      };
+      await axiosApi.post<AlbumMutation>('/albums', album, {headers});
+    }catch (e) {
+      throw e;
+    }
+  },
 );

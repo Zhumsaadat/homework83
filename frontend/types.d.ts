@@ -5,12 +5,25 @@ export interface ArtistsTypes {
     info: string;
 }
 
+export interface ArtistsMutation {
+  name: string;
+  image: string | null;
+  info: string;
+}
+
 export interface AlbumsTypes {
     _id: string;
     singer: string;
     name: string;
     date: string;
     image: string | null;
+}
+
+export interface AlbumMutation {
+  singer: string;
+  name: string;
+  date: string;
+  image: string | null;
 }
 
 export interface TracksTypes {

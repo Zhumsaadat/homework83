@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
 import { useAppDispatch } from '../../app/hooks';
 import { unsetUser } from '../../store/users/usersSlice';
-import { logout } from '../../store/users/usersThunk';
 
 
 const UserMenu = () => {
@@ -29,15 +28,23 @@ const UserMenu = () => {
         navigate('/track_history');
     };
 
-    return (
+    const handleAddAlbum = () => {
+      navigate('/addAlbum');
+    }
+
+    function handleAddArtist() {
+     navigate('/addArtist');
+    }
+
+  return (
         <>
             <Button color="inherit" onClick={handleClick}>
                 <PersonIcon/>
 
             </Button>
             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} keepMounted>
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>My account</MenuItem>
+                <MenuItem onClick={handleAddArtist}>Add Artist</MenuItem>
+                <MenuItem onClick={handleAddAlbum}>Add Album</MenuItem>
                 <MenuItem onClick={handleNav}>Track history</MenuItem>
                 <MenuItem onClick={handleLogout} >Logout</MenuItem>
             </Menu>
