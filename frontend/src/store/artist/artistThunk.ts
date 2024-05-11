@@ -1,6 +1,7 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi.ts';
-import { ArtistsTypes } from '../../../types';
+import { ArtistsMutation, ArtistsTypes } from '../../../types';
+import { RootState } from '../../app/store';
 
 export const getArtists = createAsyncThunk<ArtistsTypes[]>(
     'artists/get',
@@ -14,4 +15,21 @@ export const getArtists = createAsyncThunk<ArtistsTypes[]>(
 
         return items;
     },
+);
+
+export const createArtist = createAsyncThunk<void, ArtistsMutation, {state: RootState}>(
+  'artist/create',
+  async (artist, thunkApi) => {
+    try{
+      const token = thunkApi.getState().users.user?.token;
+
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`,
+      };
+      await axiosApi.post<ArtistsMutation>('/artists', artist, {headers});
+    }catch (e) {
+      throw e;
+    }
+  },
 );
