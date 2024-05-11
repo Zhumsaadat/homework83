@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
 import { selectIsLoading, selectTracks } from '../store/track/trackSlice';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Alert, CircularProgress, Grid, Paper, Typography } from '@mui/material';
+import { Alert, Button, CircularProgress, Grid, Paper, Typography } from '@mui/material';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { selectArtists } from '../store/artist/artistSlice';
 import { selectAlbums } from '../store/album/albumSlice';
@@ -10,6 +10,8 @@ import { selectUser } from '../store/users/usersSlice';
 import { getTracks, tracksHistoryPost } from '../store/track/trackThunk';
 import { getAlbums } from '../store/album/albumThunk';
 import { getArtists } from '../store/artist/artistThunk';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 
 const Tracks = () => {
     const dispatch = useAppDispatch();
@@ -51,7 +53,6 @@ const Tracks = () => {
     };
 
   const tracksForUsers = tracks.filter(track => track.isPublished);
-  console.log(tracksForUsers)
 
     return (
         <>
@@ -81,6 +82,13 @@ const Tracks = () => {
                         {elem.duration}
                       </Grid>
                     </Grid>
+                       <Grid sx={{marginTop: 2}}>
+                         <Button variant="outlined" startIcon={<DeleteIcon />}>
+                         </Button>
+                         {elem.isPublished ? null :(
+                           <Button variant="outlined" startIcon={<PublishedWithChangesIcon />}>
+                           </Button>)}
+                       </Grid>
                   </Paper>
                   </Grid>
                 )): tracksForUsers.map((elem) => (

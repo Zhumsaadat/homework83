@@ -1,5 +1,5 @@
 import {
-  Alert,
+  Alert, Button,
   Card,
   CardActionArea,
   CardContent,
@@ -15,6 +15,8 @@ import { getArtists } from '../store/artist/artistThunk';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { selectArtists, selectIsLoading } from '../store/artist/artistSlice';
 import { selectUser } from '../store/users/usersSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 
 
 const Artists = () => {
@@ -60,6 +62,16 @@ const Artists = () => {
                                         <Typography variant="body2" color="text.secondary" component='p'>
                                             {elem.info}
                                         </Typography>
+                                      <Grid sx={{marginTop: 2}}>
+                                        <Button variant="outlined" startIcon={<DeleteIcon />}>
+                                          Delete
+                                        </Button>
+                                        {elem.isPublished ? null :(
+                                        <Button variant="outlined" startIcon={<PublishedWithChangesIcon />}>
+                                          Publish
+                                        </Button>)}
+                                      </Grid>
+
                                     </CardContent>
                                 </CardActionArea>
                             </Card>

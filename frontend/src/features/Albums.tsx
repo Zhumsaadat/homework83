@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import {
-  Alert,
+  Alert, Button,
   Card,
   CardActionArea,
   CardContent,
@@ -17,6 +17,8 @@ import { selectAlbums, selectIsLoading } from '../store/album/albumSlice';
 import { getAlbums } from '../store/album/albumThunk';
 import { selectArtists } from '../store/artist/artistSlice';
 import { selectUser } from '../store/users/usersSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 
 
 const Albums = () => {
@@ -70,6 +72,15 @@ const Albums = () => {
                           <Typography component="div">
                             {'Release: ' + elem.date}
                           </Typography>
+                          <Grid sx={{marginTop: 2}}>
+                            <Button variant="outlined" startIcon={<DeleteIcon />}>
+                              Delete
+                            </Button>
+                            {elem.isPublished ? null :(
+                              <Button variant="outlined" startIcon={<PublishedWithChangesIcon />}>
+                                Publish
+                              </Button>)}
+                          </Grid>
                         </CardContent>
                       </CardActionArea>
                     </Card>
