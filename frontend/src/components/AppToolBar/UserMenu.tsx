@@ -42,7 +42,6 @@ const UserMenu = () => {
     navigate('/addTrack');
   }
 
-  console.log(firstPart);
 
   return (
         <>
