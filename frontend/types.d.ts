@@ -24,6 +24,7 @@ export interface AlbumMutation {
   name: string;
   date: string;
   image: string | null;
+  isPublished: boolean;
 }
 
 export interface TracksTypes {
@@ -32,6 +33,7 @@ export interface TracksTypes {
     name: string;
     duration: string;
     sequence: number;
+    isPublished: boolean;
 }
 
 export interface TracksMutation {
@@ -39,6 +41,7 @@ export interface TracksMutation {
   name: string;
   duration: string;
   sequence: number;
+  isPublished: boolean
 }
 
 export interface RegisterMutation {

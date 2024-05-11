@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
 import { selectIsLoading, selectTracks } from '../store/track/trackSlice';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, Grid, Paper, Typography } from '@mui/material';
+import { Alert, CircularProgress, Grid, Paper, Typography } from '@mui/material';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { selectArtists } from '../store/artist/artistSlice';
 import { selectAlbums } from '../store/album/albumSlice';
@@ -50,15 +50,24 @@ const Tracks = () => {
         }
     };
 
+  const tracksForUsers = tracks.filter(track => track.isPublished);
+  console.log(tracksForUsers)
+
     return (
         <>
             {album && artist && <Typography variant="h4">Artist: {artist.name}, Album: {album.name}</Typography>}
 
             <Grid container>
-                {!isLoading ? tracks.map((elem) => (
+                {!isLoading ? (
+                  user?.role === "admin"  && user ? tracks.map((elem) => (
                   <Grid item  xs={12} sm={12} md={12} key={elem._id} style={{ marginTop: '20px' }}>
-                     <Paper elevation={3} sx={{ padding: '12px'}} >
-                    <Grid container>
+                     <Paper elevation={3} sx={{position: 'relative', padding: '12px' }} >
+                    <Grid container >
+                      {elem.isPublished ? null : (
+                        <Alert variant="filled" severity="error" sx={{ position: 'absolute', top: 0, right: 0 , zIndex: 1}}>
+                          не опубликовано
+                        </Alert>
+                      )}
                       <Grid item xs={2} onClick={() => tracksHistory(elem._id)}>
                         <PlayCircleIcon />
                       </Grid>
@@ -74,7 +83,27 @@ const Tracks = () => {
                     </Grid>
                   </Paper>
                   </Grid>
-                )) : <CircularProgress />}
+                )): tracksForUsers.map((elem) => (
+                    <Grid item  xs={12} sm={12} md={12} key={elem._id} style={{ marginTop: '20px' }}>
+                      <Paper elevation={3} sx={{ padding: '12px'}} >
+                        <Grid container>
+                          <Grid item xs={2} onClick={() => tracksHistory(elem._id)}>
+                            <PlayCircleIcon />
+                          </Grid>
+                          <Grid item xs={2}  sm={2}  md={2} >
+                            {elem.sequence}
+                          </Grid>
+                          <Grid item xs={6}  sm={6}  md={6}>
+                            {elem.name}
+                          </Grid>
+                          <Grid item xs={2}  sm={2}  md={2}>
+                            {elem.duration}
+                          </Grid>
+                        </Grid>
+                      </Paper>
+                    </Grid>
+                  ))
+                ): <CircularProgress />}
             </Grid>
         </>
     );
