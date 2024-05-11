@@ -10,6 +10,8 @@ const UserMenu = () => {
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const dispatch = useAppDispatch();
+    const pathnameParts = location.pathname.split('/');
+    const firstPart = pathnameParts[1];
 
 
   const handleLogout = () => {
@@ -40,6 +42,8 @@ const UserMenu = () => {
     navigate('/addTrack');
   }
 
+  console.log(firstPart);
+
   return (
         <>
             <Button color="inherit" onClick={handleClick}>
@@ -48,8 +52,8 @@ const UserMenu = () => {
             </Button>
             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} keepMounted>
                 <MenuItem onClick={handleAddArtist}>Add Artist</MenuItem>
-                <MenuItem onClick={handleAddAlbum}>Add Album</MenuItem>
-                <MenuItem onClick={handleAddTrack}>Add Track</MenuItem>
+                {firstPart === 'albums'?  (<MenuItem onClick={handleAddAlbum}>Add Album</MenuItem>) : null}
+                {firstPart === 'tracks'?  (<MenuItem onClick={handleAddTrack}>Add Track</MenuItem>) : null}
                 <MenuItem onClick={handleNav}>Track history</MenuItem>
                 <MenuItem onClick={handleLogout} >Logout</MenuItem>
             </Menu>
