@@ -39,7 +39,6 @@ export const deleteAlbum = createAsyncThunk<void, string, {state: RootState}>(
   async (id, thunkApi) => {
     try{
       const token = thunkApi.getState().users.user?.token;
-
       const headers = {
         'Authorization': `Bearer ${token}`,
       };
@@ -48,4 +47,21 @@ export const deleteAlbum = createAsyncThunk<void, string, {state: RootState}>(
       throw e;
     }
   },
+);
+
+export const publishAlbum = createAsyncThunk(
+  'album/publishTrack',
+  async (id: string, thunkApi) => {
+    try{
+      const token = thunkApi.getState().users.user?.token;
+
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+      };
+      const response = await axiosApi.patch(`/albums/${id}/togglePublished`, { isPublished: true }, {headers});
+      return response.data;
+    }catch (e) {
+      throw e;
+    }
+  }
 );

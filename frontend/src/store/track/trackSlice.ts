@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../App/store.ts';
 import { TracksTypes } from '../../../types';
-import { createTrack, deleteTrack, getTracks } from './trackThunk';
+import { createTrack, deleteTrack, getTracks, publishTrack } from './trackThunk';
 
 
 export interface Tracks {
@@ -9,6 +9,7 @@ export interface Tracks {
     isLoading: boolean;
     createLoading: boolean;
     deleteLoading: boolean;
+    publishLoading: boolean;
 }
 
 const initialState: Tracks = {
@@ -16,6 +17,7 @@ const initialState: Tracks = {
     isLoading: false,
     createLoading: false,
     deleteLoading: false,
+    publishLoading: false,
 };
 
 export const tracksSlice = createSlice({
@@ -53,10 +55,24 @@ export const tracksSlice = createSlice({
       builder.addCase(deleteTrack.rejected, (state) => {
         state.deleteLoading = false;
       });
+
+      builder.addCase(publishTrack.pending, (state) => {
+        state.publishLoading = true;
+      });
+      builder.addCase(publishTrack.fulfilled, (state) => {
+        state.publishLoading = false;
+      });
+      builder.addCase(publishTrack.rejected, (state) => {
+        state.publishLoading = false;
+      });
     },
 });
+
+
+
 export const tracksReducer = tracksSlice.reducer;
 export const selectTracks = (state: RootState) => state.tracks.tracks;
 export const selectIsLoading = (state: RootState) => state.tracks.isLoading;
 export const selectCreateLoading = (state: RootState) => state.tracks.createLoading;
 export const selectDeleteLoading = (state: RootState) => state.tracks.deleteLoading;
+export const selectPublishLoading = (state: RootState) => state.tracks.publishLoading;

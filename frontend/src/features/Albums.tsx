@@ -14,11 +14,12 @@ import { Link as RouterLink, useParams } from 'react-router-dom';
 import { getArtists } from '../store/artist/artistThunk';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { selectAlbums, selectIsLoading } from '../store/album/albumSlice';
-import { deleteAlbum, getAlbums } from '../store/album/albumThunk';
+import { deleteAlbum, getAlbums, publishAlbum } from '../store/album/albumThunk';
 import { selectArtists } from '../store/artist/artistSlice';
 import { selectUser } from '../store/users/usersSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
+
 
 
 const Albums = () => {
@@ -51,9 +52,25 @@ const Albums = () => {
     const artist = artistName.find(elem => elem._id === params.id);
 
   const onDelete = async (id: string) => {
+    if(user.role !== "admin"){
+      alert('You do not have the right to delete!');
+    }
     const confirmation = confirm('Are you sure?');
     if (confirmation) {
       await dispatch(deleteAlbum(id));
+      if(params.id) {
+        await dispatch(getAlbums(params.id));
+      }
+    }
+  };
+
+  const onPublish = async (id: string) => {
+    if(user.role !== "admin"){
+      alert('You do not have the right to delete!');
+    }
+    const confirmation = confirm('Are you sure?');
+    if (confirmation) {
+      await dispatch(publishAlbum(id));
       if(params.id) {
         await dispatch(getAlbums(params.id));
       }
@@ -91,7 +108,7 @@ const Albums = () => {
                           Delete
                         </Button>
                         {elem.isPublished ? null :(
-                          <Button variant="outlined" startIcon={<PublishedWithChangesIcon />}>
+                          <Button variant="outlined" onClick={() => onPublish(elem._id)} startIcon={<PublishedWithChangesIcon />}>
                             Publish
                           </Button>)}
                       </Grid>

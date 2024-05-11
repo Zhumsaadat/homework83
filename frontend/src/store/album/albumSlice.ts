@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../App/store.ts';
 import { AlbumsTypes } from '../../../types';
-import { createAlbum, deleteAlbum, getAlbums } from './albumThunk';
+import { createAlbum, deleteAlbum, getAlbums, publishAlbum } from './albumThunk';
 
 export interface Albums {
     albums: AlbumsTypes[];
     isLoading: boolean;
     createLoading: boolean;
     deleteLoading: boolean;
+    publishLoading: boolean;
 }
 
 const initialState: Albums = {
@@ -15,6 +16,7 @@ const initialState: Albums = {
     isLoading: false,
     createLoading: false,
     deleteLoading: false,
+    publishLoading: false,
 };
 
 export const albumsSlice = createSlice({
@@ -51,6 +53,16 @@ export const albumsSlice = createSlice({
     });
     builder.addCase(deleteAlbum.rejected, (state) => {
       state.deleteLoading = false;
+    });
+
+    builder.addCase(publishAlbum.pending, (state) => {
+      state.publishLoading = true;
+    });
+    builder.addCase(publishAlbum.fulfilled, (state) => {
+      state.publishLoading = false;
+    });
+    builder.addCase(publishAlbum.rejected, (state) => {
+      state.publishLoading = false;
     });
     },
 });

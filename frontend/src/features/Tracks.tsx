@@ -7,7 +7,7 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { selectArtists } from '../store/artist/artistSlice';
 import { selectAlbums } from '../store/album/albumSlice';
 import { selectUser } from '../store/users/usersSlice';
-import { deleteTrack, getTracks, tracksHistoryPost } from '../store/track/trackThunk';
+import { deleteTrack, getTracks, publishTrack, tracksHistoryPost } from '../store/track/trackThunk';
 import { getAlbums } from '../store/album/albumThunk';
 import { getArtists } from '../store/artist/artistThunk';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -53,9 +53,25 @@ const Tracks = () => {
     };
 
   const onDelete = async (id: string) => {
+    if(user.role !== "admin"){
+      alert('You do not have the right to delete!');
+    }
     const confirmation = confirm('Are you sure?');
     if (confirmation) {
       await dispatch(deleteTrack(id));
+      if(params.id) {
+        await dispatch(getTracks(params.id));
+      }
+    }
+  };
+
+  const onPublish = async (id: string) => {
+    if(user.role !== "admin"){
+      alert('You do not have the right to delete!');
+    }
+    const confirmation = confirm('Are you sure?');
+    if (confirmation) {
+      await dispatch(publishTrack(id));
       if(params.id) {
         await dispatch(getTracks(params.id));
       }
@@ -96,7 +112,7 @@ const Tracks = () => {
                          <Button variant="outlined" onClick={() => onDelete(elem._id)} startIcon={<DeleteIcon />}>
                          </Button>
                          {elem.isPublished ? null :(
-                           <Button variant="outlined"  startIcon={<PublishedWithChangesIcon />}>
+                           <Button variant="outlined" onClick={() => onPublish(elem._id)}  startIcon={<PublishedWithChangesIcon />}>
                            </Button>)}
                        </Grid>
                   </Paper>

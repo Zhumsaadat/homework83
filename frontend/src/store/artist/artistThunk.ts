@@ -51,3 +51,20 @@ export const deleteArtist = createAsyncThunk<void, string, {state: RootState}>(
     }
   },
 );
+
+export const publishArtist = createAsyncThunk(
+  'artist/publishTrack',
+  async (id: string, thunkApi) => {
+    try{
+      const token = thunkApi.getState().users.user?.token;
+
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+      };
+      const response = await axiosApi.patch(`/artists/${id}/togglePublished`, { isPublished: true }, {headers});
+      return response.data;
+    }catch (e) {
+      throw e;
+    }
+  }
+);

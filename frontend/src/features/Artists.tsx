@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { deleteArtist, getArtists } from '../store/artist/artistThunk';
+import { deleteArtist, getArtists, publishArtist } from '../store/artist/artistThunk';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { selectArtists, selectIsLoading } from '../store/artist/artistSlice';
 import { selectUser } from '../store/users/usersSlice';
@@ -42,11 +42,25 @@ const Artists = () => {
   const artistForUsers = artists.filter(artist => artist.isPublished);
 
   const onDelete = async (id: string) => {
+    if(user.role !== "admin"){
+      alert('You do not have the right to delete!');
+    }
     const confirmation = confirm('Are you sure?');
     if (confirmation) {
       await dispatch(deleteArtist(id));
       }
     };
+
+  const onPublish = async (id: string) => {
+    if(user.role !== "admin"){
+      alert('You do not have the right to delete!');
+    }
+    const confirmation = confirm('Are you sure?');
+    if (confirmation) {
+      await dispatch(publishArtist(id));
+      await dispatch(getArtists);
+    }
+  };
 
 
   return (
@@ -81,7 +95,7 @@ const Artists = () => {
                                   Delete
                                 </Button>
                                 {elem.isPublished ? null :(
-                                  <Button variant="outlined" startIcon={<PublishedWithChangesIcon />}>
+                                  <Button variant="outlined" onClick={() => onPublish(elem._id)} startIcon={<PublishedWithChangesIcon />}>
                                     Publish
                                   </Button>)}
                               </Grid>
