@@ -9,6 +9,7 @@ import Login from './features/Users/Login';
 import Register from './features/Users/Register';
 import FormAlbum from './features/FormAlbum';
 import FormArtist from './features/FormArtist';
+import FormTrack from './features/FormTrack';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/addAlbum" element={<FormAlbum />} />
                 <Route path="/addArtist" element={<FormArtist />} />
+                <Route path="/addTrack" element={<FormTrack />} />
                 <Route path="/track_history" element={<TracksHistory />} />
                 <Route path="*" element={<Alert severity="error">Not found!</Alert>} />
             </Routes>

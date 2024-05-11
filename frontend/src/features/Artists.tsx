@@ -13,7 +13,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import { getArtists } from '../store/artist/artistThunk';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { selectArtists, selectIsLoading } from '../store/artist/artistSlice';
-import getTextDecoration from '@mui/material/Link/getTextDecoration';
 
 
 const Artists = () => {

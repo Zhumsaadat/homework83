@@ -1,5 +1,5 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {RootState} from '../../App/store.ts';
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../../App/store.ts';
 import { AlbumsTypes } from '../../../types';
 import { createAlbum, getAlbums } from './albumThunk';
 
@@ -16,20 +16,20 @@ const initialState: Albums = {
 };
 
 export const albumsSlice = createSlice({
-    name: 'albums/slice',
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder.addCase(getAlbums.pending, (state) => {
-            state.isLoading = true;
-        });
-        builder.addCase(getAlbums.fulfilled, (state, {payload: items}) => {
-            state.isLoading = false;
-            state.albums = items;
-        });
-        builder.addCase(getAlbums.rejected, (state) => {
-            state.isLoading = false;
-        });
+  name: 'albums/slice',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getAlbums.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAlbums.fulfilled, (state, {payload: items}) => {
+      state.isLoading = false;
+      state.albums = items;
+    });
+    builder.addCase(getAlbums.rejected, (state) => {
+      state.isLoading = false;
+    });
 
         builder.addCase(createAlbum.pending, (state) => {
           state.createLoading = true;

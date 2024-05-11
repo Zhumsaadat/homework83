@@ -50,6 +50,7 @@ tracksRouter.post('/',
   auth,
   async (req: RequestWithUser, res, next) => {
   try {
+    console.log(req.body);
     const track = req.body;
     if (!track) {
       return res.status(422).send({error: 'Field is required'});

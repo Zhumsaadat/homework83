@@ -1,4 +1,4 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi.ts';
 import { AlbumMutation, AlbumsTypes } from '../../../types';
 import { RootState } from '../../app/store';

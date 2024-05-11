@@ -1,6 +1,7 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import {History, tracksHistoryTypes, TracksTypes} from '../../../types';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { History, tracksHistoryTypes, TracksMutation, TracksTypes } from '../../../types';
 import axiosApi from '../../axiosApi.ts';
+import { RootState } from '../../app/store';
 
 export const getTracks = createAsyncThunk<TracksTypes[], string>(
     'tracks/get',
@@ -50,4 +51,20 @@ export const getTracksHistory = createAsyncThunk<History[], string>(
             throw err;
         }
     },
+);
+
+export const createTrack = createAsyncThunk<void, TracksMutation, {state: RootState}>(
+  'tracks/create',
+  async (track, thunkApi) => {
+    try{
+      const token = thunkApi.getState().users.user?.token;
+
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+      };
+      await axiosApi.post<TracksMutation>('/tracks', track, {headers});
+    }catch (e) {
+      throw e;
+    }
+  },
 );

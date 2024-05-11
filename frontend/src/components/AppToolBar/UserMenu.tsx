@@ -36,6 +36,10 @@ const UserMenu = () => {
      navigate('/addArtist');
     }
 
+  function handleAddTrack() {
+    navigate('/addTrack');
+  }
+
   return (
         <>
             <Button color="inherit" onClick={handleClick}>
@@ -45,6 +49,7 @@ const UserMenu = () => {
             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} keepMounted>
                 <MenuItem onClick={handleAddArtist}>Add Artist</MenuItem>
                 <MenuItem onClick={handleAddAlbum}>Add Album</MenuItem>
+                <MenuItem onClick={handleAddTrack}>Add Track</MenuItem>
                 <MenuItem onClick={handleNav}>Track history</MenuItem>
                 <MenuItem onClick={handleLogout} >Logout</MenuItem>
             </Menu>
