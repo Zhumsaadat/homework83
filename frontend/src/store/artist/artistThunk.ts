@@ -33,3 +33,21 @@ export const createArtist = createAsyncThunk<void, ArtistsMutation, {state: Root
     }
   },
 );
+
+export const deleteArtist = createAsyncThunk<void, string, {state: RootState}>(
+  'artist/delete',
+  async (id, thunkApi) => {
+    try{
+      const token = thunkApi.getState().users.user?.token;
+
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+      };
+
+      await axiosApi.delete(`/artists/${id}`, {headers});
+      thunkApi.dispatch(getArtists());
+    }catch (e) {
+      throw e;
+    }
+  },
+);

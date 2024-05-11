@@ -1,5 +1,6 @@
 import {
-  Alert, Button,
+  Alert,
+  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -9,9 +10,9 @@ import {
   styled,
   Typography
 } from '@mui/material';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { getArtists } from '../store/artist/artistThunk';
+import { deleteArtist, getArtists } from '../store/artist/artistThunk';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { selectArtists, selectIsLoading } from '../store/artist/artistSlice';
 import { selectUser } from '../store/users/usersSlice';
@@ -40,19 +41,27 @@ const Artists = () => {
 
   const artistForUsers = artists.filter(artist => artist.isPublished);
 
-    return (
+  const onDelete = async (id: string) => {
+    const confirmation = confirm('Are you sure?');
+    if (confirmation) {
+      await dispatch(deleteArtist(id));
+      }
+    };
+
+
+  return (
         <>
             <Grid container spacing={3} mt={3}>
                 {!isLoading ? (
                   user?.role === "admin"  && user ? artists.map((elem) => (
                     <Grid item xs={3} key={elem._id} >
-                        <RouterLink to={`/albums/${elem._id}`}>
                             <Card sx={{position: 'relative', maxWidth: 345 }}>
                               {elem.isPublished ? null : (
                                 <Alert variant="filled" severity="error" sx={{ position: 'absolute', top: 0, right: 0 , zIndex: 1}}>
                                   не опубликовано
                                 </Alert>
                               )}
+                              <RouterLink to={`/albums/${elem._id}`}>
                                 <CardActionArea>
                                     {elem.image !== null ? <ImageCardMedia image={'http://localhost:8000' + '/' + elem.image}/> : ''}
                                     <CardContent>
@@ -62,20 +71,22 @@ const Artists = () => {
                                         <Typography variant="body2" color="text.secondary" component='p'>
                                             {elem.info}
                                         </Typography>
-                                      <Grid sx={{marginTop: 2}}>
-                                        <Button variant="outlined" startIcon={<DeleteIcon />}>
-                                          Delete
-                                        </Button>
-                                        {elem.isPublished ? null :(
-                                        <Button variant="outlined" startIcon={<PublishedWithChangesIcon />}>
-                                          Publish
-                                        </Button>)}
-                                      </Grid>
+
 
                                     </CardContent>
                                 </CardActionArea>
+                              </RouterLink>
+                              <Grid sx={{marginTop: 2}}>
+                                <Button variant="outlined" onClick={() => onDelete(elem._id)}  startIcon={<DeleteIcon   />}>
+                                  Delete
+                                </Button>
+                                {elem.isPublished ? null :(
+                                  <Button variant="outlined" startIcon={<PublishedWithChangesIcon />}>
+                                    Publish
+                                  </Button>)}
+                              </Grid>
                             </Card>
-                        </RouterLink>
+
                     </Grid>
                 )) :  artistForUsers.map((elem) => (
                     <Grid item xs={3} key={elem._id}>

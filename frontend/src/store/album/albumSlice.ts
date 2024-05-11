@@ -1,18 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../App/store.ts';
 import { AlbumsTypes } from '../../../types';
-import { createAlbum, getAlbums } from './albumThunk';
+import { createAlbum, deleteAlbum, getAlbums } from './albumThunk';
 
 export interface Albums {
     albums: AlbumsTypes[];
     isLoading: boolean;
     createLoading: boolean;
+    deleteLoading: boolean;
 }
 
 const initialState: Albums = {
     albums: [],
     isLoading: false,
     createLoading: false,
+    deleteLoading: false,
 };
 
 export const albumsSlice = createSlice({
@@ -40,6 +42,16 @@ export const albumsSlice = createSlice({
         builder.addCase(createAlbum.rejected, (state) => {
          state.createLoading = false;
         });
+
+    builder.addCase(deleteAlbum.pending, (state) => {
+      state.deleteLoading = true;
+    });
+    builder.addCase(deleteAlbum.fulfilled, (state) => {
+      state.deleteLoading = false;
+    });
+    builder.addCase(deleteAlbum.rejected, (state) => {
+      state.deleteLoading = false;
+    });
     },
 });
 
@@ -47,3 +59,4 @@ export const albumsReducer = albumsSlice.reducer;
 export const selectAlbums = (state: RootState) => state.albums.albums;
 export const selectIsLoading = (state: RootState) => state.albums.isLoading;
 export const selectCreateLoading = (state: RootState) => state.albums.createLoading;
+export const deleteCreateLoading = (state: RootState) => state.albums.deleteLoading;

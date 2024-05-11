@@ -85,11 +85,15 @@ tracksRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
 
 tracksRouter.patch('/:id/togglePublished', auth, permit('admin'), async (req, res, next) => {
   try {
-    const trackId = req.params.id;
-    const track = await Tracks.findById(trackId);
-    if (!track) {
-      return res.status(404).send({ error: 'Track not fount' });
+    if(!req.params.id) {
+      return res.status(404).send({error: 'Track not fount'});
     }
+      const trackId = req.params.id;
+
+      const track = await Tracks.findById(trackId);
+      if (!track) {
+        return res.status(404).send({error: 'Track not fount'});
+      }
 
     track.isPublished = !track.isPublished;
     await track.save();

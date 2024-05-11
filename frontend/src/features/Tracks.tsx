@@ -7,7 +7,7 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { selectArtists } from '../store/artist/artistSlice';
 import { selectAlbums } from '../store/album/albumSlice';
 import { selectUser } from '../store/users/usersSlice';
-import { getTracks, tracksHistoryPost } from '../store/track/trackThunk';
+import { deleteTrack, getTracks, tracksHistoryPost } from '../store/track/trackThunk';
 import { getAlbums } from '../store/album/albumThunk';
 import { getArtists } from '../store/artist/artistThunk';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -52,6 +52,16 @@ const Tracks = () => {
         }
     };
 
+  const onDelete = async (id: string) => {
+    const confirmation = confirm('Are you sure?');
+    if (confirmation) {
+      await dispatch(deleteTrack(id));
+      if(params.id) {
+        await dispatch(getTracks(params.id));
+      }
+    }
+  };
+
   const tracksForUsers = tracks.filter(track => track.isPublished);
 
     return (
@@ -83,10 +93,10 @@ const Tracks = () => {
                       </Grid>
                     </Grid>
                        <Grid sx={{marginTop: 2}}>
-                         <Button variant="outlined" startIcon={<DeleteIcon />}>
+                         <Button variant="outlined" onClick={() => onDelete(elem._id)} startIcon={<DeleteIcon />}>
                          </Button>
                          {elem.isPublished ? null :(
-                           <Button variant="outlined" startIcon={<PublishedWithChangesIcon />}>
+                           <Button variant="outlined"  startIcon={<PublishedWithChangesIcon />}>
                            </Button>)}
                        </Grid>
                   </Paper>

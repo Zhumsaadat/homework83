@@ -33,3 +33,19 @@ export const createAlbum = createAsyncThunk<void, AlbumMutation, {state: RootSta
     }
   },
 );
+
+export const deleteAlbum = createAsyncThunk<void, string, {state: RootState}>(
+  'album/delete',
+  async (id, thunkApi) => {
+    try{
+      const token = thunkApi.getState().users.user?.token;
+
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+      };
+      await axiosApi.delete(`/albums/${id}`, {headers});
+    }catch (e) {
+      throw e;
+    }
+  },
+);
