@@ -11,7 +11,8 @@ const run = async () => {
   await mongoose.connect(config.db);
   const db = mongoose.connection;
 
-  try{
+
+try{
     await  db.dropCollection('albums');
     await  db.dropCollection('artists');
     await  db.dropCollection('trackhistories');
@@ -20,19 +21,22 @@ const run = async () => {
   }catch (e) {
     console.log('Collections were not present, skipping drop...')
   }
-
-  await User.create({
-    username: 'user',
+  
+ await User.create({
+    email: 'user',
     password: '123',
     token: crypto.randomUUID(),
-    role: 'listener'
+    role: 'listener',
+    displayName: 'User'
   },
     {
-      username: 'admin',
+      email: 'admin',
       password: '123',
       token: crypto.randomUUID(),
-      role: 'admin'
+      role: 'admin',
+      displayName: 'Admin'
   })
+ 
 
   const [stingArtists, WhitneyArtists, shakira]= await Artists.create({
     name: 'Sting',
@@ -228,4 +232,5 @@ const run = async () => {
   };
 
 run().catch(console.error);
+
 

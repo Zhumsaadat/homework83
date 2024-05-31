@@ -19,6 +19,7 @@ const FormTrack = () => {
     name: '',
     duration: '',
     sequence: 0,
+    isPublished: false,
   });
 
   const formSubmit = async (e: React.FormEvent) => {
@@ -84,9 +85,9 @@ const FormTrack = () => {
           </Grid>
           <Grid item xs={12}>
             <Select
-              label="Категория"
-              id="category"
-              name="category"
+              label="Album"
+              id="album"
+              name="album"
               value={track.album}
               onChange={selectChange}
               fullWidth

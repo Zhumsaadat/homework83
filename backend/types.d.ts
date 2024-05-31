@@ -25,10 +25,13 @@ export interface TracksMutation {
 }
 
 export interface UserMutation {
-  username: string;
+  email: string;
   password: string;
   token: string;
   role: string;
+  displayName: string;
+  googleID?: string;
+  avatar: string | null;
 }
 
 export interface TrackHistoryMutation {

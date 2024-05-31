@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { LoginMutation } from '../../../types';
 import { selectLoginError } from '../../store/users/usersSlice';
 import { loginUser } from '../../store/users/usersThunk';
+import {GoogleLogin} from '@react-oauth/google';
+
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +15,7 @@ const Login = () => {
   const error = useAppSelector(selectLoginError);
 
   const [state, setState] = useState<LoginMutation>({
-    username: '',
+    email: '',
     password: '',
   });
 
@@ -23,6 +25,11 @@ const Login = () => {
       return {...prevState, [name]: value};
     });
   };
+
+  const googleLoginHandler = async(credential: string) => {
+    await dispatch(googleLoginHandler(credential)).unwrap();
+    navigate('/');
+  }
 
   const submitFormHandler = async (e: FormEvent) => {
     e.preventDefault();
@@ -53,16 +60,28 @@ const Login = () => {
               {error.error}
             </Alert>
           )}
+          <Box>
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                if (credentialResponse.credential) {
+                  void googleLoginHandler(credentialResponse.credential);
+                }
+              }}
+              onError={() => {
+                console.log('Login error');
+              }}
+            />
+          </Box>
           <Box component="form" onSubmit={submitFormHandler} sx={{mt: 3}}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   required
-                  label="Username"
-                  name="username"
-                  value={state.username}
+                  label="E-mail"
+                  name="email"
+                  value={state.email}
                   onChange={inputChangeHandler}
-                  autoComplete="current-username"
+                  autoComplete="current-email"
                   fullWidth
                 />
               </Grid>

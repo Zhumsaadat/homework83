@@ -8,14 +8,14 @@ const SALT_WORK_FACTOR = 10;
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema<UserMutation, UserModel, UserMethods>({
-  username: {
+  email: {
     type: String,
     required: true,
     unique: true,
     validate: {
-      validator: async function (this: HydratedDocument<UserMutation>, username: string): Promise<boolean> {
-        if (!this.isModified('username')) return true;
-        const user: HydratedDocument<UserMutation> | null = await User.findOne({username});
+      validator: async function (this: HydratedDocument<UserMutation>, email: string): Promise<boolean> {
+        if (!this.isModified('email')) return true;
+        const user: HydratedDocument<UserMutation> | null = await User.findOne({email});
         return !Boolean(user);
       },
       message: 'This user is already registered',
@@ -34,7 +34,13 @@ const UserSchema = new Schema<UserMutation, UserModel, UserMethods>({
     required: true,
     enum: ['admin', 'listener'],
     default: 'listener',
-  }
+  },
+   displayName: {
+    type: String,
+    required: true
+   },
+  googleID: String,
+  avatar: String,
 });
 
 UserSchema.method('checkPassword', async function (password: string) {
